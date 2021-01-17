@@ -1,30 +1,35 @@
-from itertools import permutations as P
+from itertools import permutations as p
 
 
 def check_prime_num(n):
-    if n != 1:
-        for f in range(2, n):
-            if n % f == 0:
-                return False
-    else:
+    if n == 0 or n == 1:
         return False
+
+    if n == 2:
+        return True
+
+    for d in range(2, n):
+        if n % d == 0:
+            return False
 
     return True
 
 
 def solution(numbers):
     answer = 0
-    distinct_li = []
-    num = len(numbers)
-    for i in range(num):
-        distinct_li.append(numbers[i])
-    for i in range(1, num + 1):
-        temp_li = list(set(map(''.join, P(distinct_li, i))))
+    # 주어진 숫자 목록
+    number_list = list(numbers)
 
+    for i in range(1, len(number_list)+1):
+        # i개의 숫자를 가지고 모든 경우의 수를 찾기
+        temp_li = list(set(map(''.join, p(numbers, i))))
+
+        # 각 경우에 대하여 소수인지 확인
         for j in temp_li:
             if check_prime_num(int(j)) == True and j[0] != '0':
+                print(j)
                 answer += 1
     return answer
 
 
-solution('011')
+print(solution('011'))
