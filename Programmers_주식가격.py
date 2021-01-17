@@ -7,22 +7,24 @@ def solution(prices):
         if len(stack) == 0:
             stack.append((p, index))
 
-        else:
-            # 지금 넣을 주식 가격이 기존의 가격보다 크거나 같으면 그냥 삽입
-            if p >= stack[-1][0]:
-                stack.append((p, index))
-
-            # 지금 넣은 주식 가격이 하락세라면 그 전에 자신보다 높았던 가격들을 다 pop
-            elif p < stack[-1][0]:
-                while len(stack) != 0 and p < stack[-1][0]:
-                    answer[stack[-1][1]] += 1
-                    stack.pop()
-                stack.append((p, index))
+        # 지금 넣을 주식 가격이 기존의 가격보다 크거나 같으면 그냥 삽입
+        elif p >= stack[-1][0]:
+            # 그 전에 주식들은 가격이 떨어지고 않고 있는 시간을 더하기
             for s in stack:
                 answer[s[1]] += 1
+            stack.append((p, index))
+
+        # 지금 넣은 주식 가격이 하락세라면 그 전에 자신보다 높았던 가격들을 다 pop
+        elif p < stack[-1][0]:
+            while len(stack) != 0 and p < stack[-1][0]:
+                answer[stack[-1][1]] += 1
+                stack.pop()
+            for s in stack:
+                answer[s[1]] += 1
+            stack.append((p, index))
     print(answer)
 
     return answer
 
 
-solution([1, 2, 3, 2, 3])
+solution([1, 3, 5, 2, 1])
