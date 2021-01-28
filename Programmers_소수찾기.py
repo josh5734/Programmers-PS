@@ -1,4 +1,5 @@
 from itertools import permutations as p
+from math import sqrt
 
 
 def check_prime_num(n):
@@ -8,7 +9,7 @@ def check_prime_num(n):
     if n == 2:
         return True
 
-    for d in range(2, n):
+    for d in range(2, int(sqrt(n)) + 1):
         if n % d == 0:
             return False
 
@@ -27,7 +28,6 @@ def solution(numbers):
         # 각 경우에 대하여 소수인지 확인
         for j in temp_li:
             if check_prime_num(int(j)) == True and j[0] != '0':
-                print(j)
                 answer += 1
     return answer
 
