@@ -7,6 +7,4 @@ def solution(brown, yellow):
         for h in range(1, w+1):
             if (w-2) * (h-2) == yellow and w*h == yellow + brown:
                 answer = [w, h]
-                break
-
-    return answer
+                return answer
