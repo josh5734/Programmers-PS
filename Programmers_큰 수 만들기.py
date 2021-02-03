@@ -1,3 +1,26 @@
+######### 풀이 1 ###########
+def solution(number, k):
+    answer = []
+
+    for num in number:
+        if len(answer) == 0:
+            answer.append(num)
+        elif answer[-1] < num and k > 0:
+            while answer[-1] < num:
+                answer.pop()
+                k -= 1
+                if len(answer) == 0 or k == 0:
+                    break
+            answer.append(num)
+        else:
+            answer.append(num)
+    if k > 0:
+        answer = answer[:-k]
+    return ''.join(answer)
+
+######### 풀이 2 ###########
+
+
 def solution(number, k):
     num = list(number)
     answer = [num[0]]
