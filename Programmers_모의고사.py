@@ -5,11 +5,11 @@ def solution(answers):
     scores = [0, 0, 0]
     answer = []
     for idx in range(0,len(answers)):
-        if pattern_1[idx%5] == answers[idx]:
+        if pattern_1[idx % 5] == answers[idx]:
             scores[0] += 1
-        if pattern_2[idx%8] == answers[idx]:
+        if pattern_2[idx % 8] == answers[idx]:
             scores[1] += 1
-        if pattern_3[idx%10] == answers[idx]:
+        if pattern_3[idx % 10] == answers[idx]:
             scores[2] += 1
     max_score = max(scores)
     for i in range(3):
