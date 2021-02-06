@@ -20,6 +20,7 @@ def solution(m, n, board):
         for r in range(m-1):
             for c in range(n-1):
                 shape = board_list[r][c]
+                # 이미 삭제된 블록에 대해서는 체크하지 않는다.
                 if shape != 'X':
                     check_remove(r, c, board_list, shape, check)
 
@@ -29,6 +30,7 @@ def solution(m, n, board):
                 # 삭제할 블록이 있다면 remove = True
                 if check[i][j] == True:
                     remove = True
+                    # 삭제되는 블록은 'X'로 표시
                     board_list[i][j] = 'X'
                     answer += 1
 
