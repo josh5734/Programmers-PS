@@ -5,14 +5,10 @@ def solution(number, k):
     for num in number:
         if len(answer) == 0:
             answer.append(num)
-        elif answer[-1] < num and k > 0:
-            while answer[-1] < num:
+        else:
+            while len(answer) > 0 and answer[-1] < num and k > 0:
                 answer.pop()
                 k -= 1
-                if len(answer) == 0 or k == 0:
-                    break
-            answer.append(num)
-        else:
             answer.append(num)
     if k > 0:
         answer = answer[:-k]
