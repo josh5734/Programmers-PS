@@ -1,8 +1,5 @@
 
 def solution(routes):
-    # 차량이 한 대밖에 없으면 1을 리턴
-    if len(routes) == 1:
-        return 1
     # 차량의 대수는 1이상으로 카메라를 한 개로 초기화
     camera = 1
     # 진입 시점이 작은 순서대로 정렬
