@@ -30,12 +30,10 @@ def floyd(n, fares):
 
 
 def solution(n, s, a, b, fares):
-    answer = 0
     # 플로이드 워셜로 모든 지점에서 모든 지점으로 가는 비용을 계산
     graph = floyd(n, fares)
-    show(graph)
 
-    # 두 사람이 합승해서 가는 도착지를 노드 N이라고 하면 최종 요금은 (시작 -> N) * 1/2 + 각 사람이  N -> 도착점까지 가는 비용
+    # 두 사람이 합승해서 가는 도착지를 노드 N이라고 하면 최종 요금은 (시작 -> N) + (각 사람이  N -> 도착점까지 가는 비용)
     min_cost = (1e9)
     for together in range(1, n+1):
         cost = graph[s][together] + graph[together][a] + graph[together][b]
