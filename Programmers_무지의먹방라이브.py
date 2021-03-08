@@ -20,9 +20,9 @@ def solution(food_times, k):
         length -= 1
         oneCycleTime = minFoodAmount * length
         nextFoodIdx += 1
-    foods = foods[nextFoodIdx-1:]
+    foods = foods[nextFoodIdx-1:]  # 지금까지 다 먹은 음식 제거
     foods = sorted(foods, key=lambda x: x[1])  # 다시 원래 인덱스순으로 정렬
-    idx = k % len(foods)
+    idx = k % len(foods)  # 남은 음식들 중에서 k번째 구하기
     return foods[idx][1]
 
 # k가 매우 크면 O(N)의 시간복잡도에서 효율성 테스트 실패할 것
