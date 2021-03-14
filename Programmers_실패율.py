@@ -7,7 +7,6 @@ def solution(N, stages):
             onStagePlayers[i] += 1
     for stage in stages:     
         stageNotClearPlayers[stage] += 1
-    print(onStagePlayers, stageNotClearPlayers)
     result = []
     stageNumber = 1
     # 0번째, N+1 번째 스테이지 제외
