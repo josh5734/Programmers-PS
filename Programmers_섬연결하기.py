@@ -16,16 +16,12 @@ def solution(n, costs):
     count = 0
     while count < n:  # 방문해야 하는 정점의 수만큼 반복
         cost, start = heapq.heappop(pq)
-        if visited[start]:
-            continue
-        visited[start] = True  # 방문 처리
-        answer += cost
-        count += 1
-        for dest, cost in graph[start]:
-            if not visited[dest]:
-                if visited[dest]:
-                    continue
-                else:
+        if not visited[start]:
+            visited[start] = True  # 방문 처리
+            count += 1
+            answer += cost
+            for dest, cost in graph[start]:
+                if not visited[dest]:
                     # 튜플의 0번째 원소를 cost로 해서 pq 삽입
                     heapq.heappush(pq, (cost, dest))
     return answer
