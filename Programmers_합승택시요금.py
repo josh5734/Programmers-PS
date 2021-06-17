@@ -1,9 +1,9 @@
 def show(graph):
     for i in range(len(graph)):
-        for j in range(len(graph)):
+        for j in range(len(graph[0])):
             print(graph[i][j], end=' ')
         print()
-
+    print()
 
 def floyd(n, fares):
     inf = int(1e9)
