@@ -8,7 +8,7 @@ def normal_dp(sticker):
     dp[0] = sticker[0]
     dp[1] = max(sticker[0], sticker[1])
     
-    for i in range(2, n):
+    for i in range(2, n):   
         dp[i] = max(dp[i-2] + sticker[i], dp[i-1])
     return max(dp)
 
@@ -23,7 +23,6 @@ def solution(sticker):
     # 마지막 스티커는 선택 X
     first_selected = normal_dp(sticker[2:-1]) + sticker[0]
     
-    # 1번 스티커를 선택하지 않으면 
-    # 2번 스티커부터 dp
+    # 1번 스티커를 선택하지 않으면 # 2번 스티커부터 dp
     first_not_selected = normal_dp(sticker[1:])
     return max(first_selected, first_not_selected)
