@@ -1,30 +1,24 @@
-from collections import deque
-
+import heapq
 inf = int(1e10)
-
-
-
-
-
 def dijkstra(start, graph, N, K):
     distance = [inf] * (N+1)
     distance[1] = 0
 
-    q = deque()
-    q.append((0, start))
+    q = []
+    heapq.heappush(q, (0, start))
 
     while q:
         # 현재 노드를 꺼낸다.
-        dist, now = q.popleft()
-
+        dist, now = heapq.heappop(q)
+        if dist < distance[now]:
+            continue
         # 현재 노드에서 다른 노드까지 비용 갱신
-        for next in range(1, N+1):
-            cost = dist + graph[now][next]
-
-            if distance[next] > cost:
-                distance[next] = cost
-                q.append((cost, next))
+        for nodeIndex, cost in enumerate(graph[now]):
+            if distance[nodeIndex] > cost + dist:
+                distance[nodeIndex] = cost + dist
+                q.append((cost + dist, nodeIndex))
     answer = 0
+    print(distance)
     for d in distance:
         if d <= K:
             answer += 1
@@ -43,17 +37,4 @@ def solution(N, road, K):
         graph[i][i] = 0
     return dijkstra(1, graph, N, K)
 
-
-'''
-def dijkstra(start, graph, N, K):
-    
-    for k in range(1, N+1):
-        for i in range(1, N+1):
-            for j in range(1, N+1):
-                graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
-    answer = 0
-    for d in graph[1]:
-        if d <= K: 
-            answer += 1
-    return answer
-'''
+print(solution(N=6, road=[[1,2,1],[1,3,2],[2,3,2],[3,4,3],[3,5,2],[3,5,3],[5,6,1]],K=4))
