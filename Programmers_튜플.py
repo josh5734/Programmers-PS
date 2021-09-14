@@ -33,5 +33,3 @@ def solution(s):
                 answer.append(number)
     return answer
 
-s = "{{1,2,3},{2,1},{1,2,4,3},{2}}"
-print(solution(s))
