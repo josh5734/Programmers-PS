@@ -29,41 +29,45 @@ def solution(play_time, adv_time, logs):
     onWatching = [0] * (play_time + 2)
     
     # 모든 시청 기록에 대해서 시작, 종료 시점을 기록
-    enter, out = [], []
     for log in logs:
         start, end = log[0], log[1]
         onWatching[start] += 1
-        onWatching[end+1] -= 1  # 나가는 시점까지는 영상 시청
-    # t = 0 일때 누적 시청량
+        onWatching[end] -= 1
+
+
+    for i in range(1, play_time+1):
+        onWatching[i] += onWatching[i-1]
+
     t = 0
-    total = 0
-    net_change = 0  # 각 시점에서 들어오고 나가는 총 변화량
-    for i in range(t+adv_time+1):
-        net_change += onWatching[i]
-        total += net_change
+    total = 0 
+
+    # t = 0 일때 누적 시청량 초기화
+    for i in range(adv_time+1):
+        total += onWatching[i]
     totalMax = total
     answer = [(0,0)]
 
+    # 모든 가능한 광고 시작 시간에 대해 슬라이딩 윈도우 
     while t < play_time - adv_time:
-        t += 1
-        net_change += onWatching[t + adv_time] - onWatching[t-1]
-        total += net_change
-        if totalMax <= total:
+        total += onWatching[t + adv_time] - onWatching[t]
+        if totalMax < total:
             totalMax = total
-            answer.append((total,t))
+            answer.append((total,t+1))
+        t += 1
 
     answer = sorted(answer, key = lambda x : (x[0], -x[1]))
     return parseIntoHour(answer[-1][1])
 
+
 play_time = "99:59:59"
 adv_time = "25:00:00"
 logs = ["69:59:59-89:59:59", "01:00:00-21:00:00", "79:59:59-99:59:59", "11:00:00-31:00:00"]
-print(solution(play_time,adv_time,logs))
+# print(solution(play_time,adv_time,logs))
 
 play_time2 = "02:03:55"
 adv_time2 = "00:14:15"
 logs2 = ["01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30"]
-print(solution(play_time2,adv_time2,logs2))
+# print(solution(play_time2,adv_time2,logs2))
 
 p = "10:00:00"
 a = "01:00:00"
@@ -111,3 +115,45 @@ def solution(play_time, adv_time, logs):
     print(candidates[-1])
     return parseIntoHour(candidates[-1][1])
 '''
+
+
+def solution(play_time, adv_time, logs):
+   answer = ''
+   adv_time = time_converter(adv_time)
+   play_time = time_converter(play_time)
+   watch_logs = [0 for _ in range(play_time)]
+   print(play_time, adv_time, len(watch_logs))
+   # 여기서 시간이 오래걸림...
+   for log in logs:
+       s = log.split("-")
+       start, end = time_converter(s[0]), time_converter(s[1])
+       while start < end:
+           watch_logs[start] += 1
+           start += 1
+
+   temp = sum(watch_logs[:adv_time])
+   max_time = temp
+   answer = 0
+   s, e = 0, adv_time
+   while e < play_time:
+       if temp - watch_logs[s] + watch_logs[e] > max_time:
+           max_time = temp - watch_logs[s] + watch_logs[e]
+           answer = s + 1
+       temp = temp - watch_logs[s] + watch_logs[e]
+       s += 1
+       e += 1
+
+   hh, mm, ss = answer // 3600, (answer % 3600) // 60, answer % 60
+
+   return f"{str(hh).zfill(2)}:{str(mm).zfill(2)}:{str(ss).zfill(2)}"
+
+
+def time_converter(s):
+   time = list(map(int, s.split(":")))
+   return 3600 * time[0] + 60 * time[1] + time[2]
+
+
+p = "50:00:00"
+a = "50:00:00"
+l = ["15:36:51-38:21:49", "10:14:18-15:36:51", "38:21:49-42:51:45"]
+print(solution(p, a, l))
